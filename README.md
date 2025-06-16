@@ -150,13 +150,53 @@ This module also includes a potentiometer that will fix the threshold value, & t
 
 
 ##  Program 
+```
+#include "main.h"
+#include"stdio.h"
+uint32_t adcvalue;
+#if defined (_ICCARM) || defined (_ARMCC_VERSION)
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#elif defined(_GNUC_)
+   
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#endif  
 
+while(1)
+{
+
+	HAL_ADC_Start(&hadc1);
+			HAL_ADC_PollForConversion(&hadc1,100);
+			adcvalue = HAL_ADC_GetValue(&hadc1);
+			HAL_ADC_Stop(&hadc1);
+			HAL_Delay(500);
+			printf("ADC VALUE:%ld\n",adcvalue);
+
+}
+
+PUTCHAR_PROTOTYPE
+{
+
+  HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 0xFFFF);
+
+  return ch;
+}
+```
 
  
 
-## Result :
- 
 ## Output  :
+![image](https://github.com/user-attachments/assets/ecffdb8c-a41b-41de-9037-735703138f43)
+![image](https://github.com/user-attachments/assets/d9102e5b-6b62-4105-a635-8e9d4471b5a4)
+![image](https://github.com/user-attachments/assets/845e2509-8302-4801-b0bd-f5c2e1b53069)
+![image](https://github.com/user-attachments/assets/babe283e-74f9-4d93-a8b7-6e6387ccfad0)
+## Dipping soil-moisture-sensor-device in water:
+![image](https://github.com/user-attachments/assets/53d3d1ee-cdc1-4f9d-a165-82fa8020a4dd)
+ADC Value after Dipping Soil-moisture -device in water:
+
+![image](https://github.com/user-attachments/assets/c7c9428f-a53e-4c91-872e-792d608c8419)
+
+## Result:
+Hence,the configuring analog port to inteface an analog sensor and read the values using serial port runned successfully.
 
 
 
